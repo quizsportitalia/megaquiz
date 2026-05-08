@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ultimate Sports Quiz</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* NAVBAR */
+
+nav{
+    width:100%;
+    padding:20px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:fixed;
+    top:0;
+    z-index:1000;
+    background:rgba(15,23,42,0.9);
+    backdrop-filter:blur(10px);
+}
+
+nav h1{
+    color:#38bdf8;
+    font-size:28px;
+}
+
+nav ul{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#38bdf8;
+}
+
+/* HERO */
+
+.hero{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px;
+    background:
+    linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+    url("https://www.virgilio.it/motori/wp-content/uploads/sites/4/2017/03/Formula-1-MotoGP-Svizzera-chiaro.jpg");
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-content{
+    max-width:850px;
+}
+
+.hero h2{
+    font-size:65px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:20px;
+    color:#cbd5e1;
+    line-height:1.7;
+}
+
+.hero button{
+    margin-top:35px;
+    padding:15px 35px;
+    border:none;
+    border-radius:12px;
+    background:#38bdf8;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.hero button:hover{
+    background:#0ea5e9;
+    transform:scale(1.05);
+}
+
+/* SEZIONI QUIZ */
+
+.section{
+    padding:100px 8%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.section-title h2{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.section-title p{
+    color:#94a3b8;
+}
+
+.quiz-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.quiz-card{
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+    transition:0.4s;
+    box-shadow:0 0 25px rgba(0,0,0,0.4);
+}
+
+.quiz-card:hover{
+    transform:translateY(-10px);
+}
+
+.quiz-card img{
+    width:100%;
+    height:240px;
+    object-fit:cover;
+}
+
+.quiz-content{
+    padding:25px;
+}
+
+.quiz-content h3{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.quiz-content p{
+    color:#cbd5e1;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.quiz-content button{
+    padding:12px 25px;
+    border:none;
+    border-radius:10px;
+    background:#38bdf8;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.quiz-content button:hover{
+    background:#0ea5e9;
+}
+
+/* QUIZ AREA */
+
+.quiz-page{
+    display:none;
+    padding:120px 8%;
+}
+
+.question-box{
+    background:#1e293b;
+    margin-bottom:25px;
+    padding:25px;
+    border-radius:15px;
+}
+
+.question-box h3{
+    margin-bottom:15px;
+    color:#38bdf8;
+}
+
+/* BOTTONI RISPOSTE MULTIPLE (PRO GAMING) */
+
+.option-btn{
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#334155;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.option-btn:hover{
+    background:#475569;
+    transform:scale(1.02);
+}
+
+.option-btn.selected{
+    background:#38bdf8;
+    color:#0f172a;
+    font-weight:600;
+}
+
+/* bottone avanti più “gaming” */
+.submit-btn{
+    margin-top:15px;
+}
+
+.submit-btn{
+    padding:15px 35px;
+    background:#22c55e;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.submit-btn:hover{
+    background:#16a34a;
+}
+
+.result{
+    margin-top:25px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* NEWS */
+
+.news-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.news-card{
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.news-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.news-content{
+    padding:25px;
+}
+
+.news-content h3{
+    margin-bottom:15px;
+}
+
+.news-content p{
+    color:#cbd5e1;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.news-content a{
+    color:#38bdf8;
+    text-decoration:none;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:40px;
+    background:#020617;
+    color:#94a3b8;
+}
+
+@media(max-width:768px){
+
+    .hero h2{
+        font-size:42px;
+    }
+
+    nav{
+        flex-direction:column;
+        gap:15px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+
+<nav>
+    <h1>Ultimate Sports Quiz</h1>
+
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#quizSection">Quiz</a></li>
+        <li><a href="#news">News</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <h2>Metti alla prova la tua conoscenza sportiva</h2>
+
+        <p>
+            Sfida te stesso con quiz avanzati su Formula 1,
+            MotoGP e Calcio.
+            Ogni partita contiene 15 domande casuali estratte
+            da un enorme database di domande.
+            Solo i veri esperti riescono a fare 15/15.
+        </p>
+
+        <button onclick="scrollToQuiz()">Inizia Ora</button>
+
+    </div>
+
+</section>
+
+<!-- QUIZ INTRO -->
+
+<section class="section" id="quizSection">
+
+    <div class="section-title">
+        <h2>Scegli il tuo Quiz</h2>
+        <p>Tre categorie dedicate agli appassionati di sport</p>
+    </div>
+
+    <div class="quiz-grid">
+
+        <div class="quiz-card">
+            <img src="https://cdn-4.motorsport.com/images/amp/YBVowv7Y/s6/charles-leclerc-ferrari.jpg">
+
+            <div class="quiz-content">
+                <h3>🏎️ Formula 1</h3>
+
+                <p>
+                    Domande avanzate su piloti, scuderie,
+                    statistiche storiche, regolamenti e circuiti.
+                </p>
+
+                <button onclick="openQuiz('f1')">
+                    Avvia Quiz
+                </button>
+            </div>
+        </div>
+
+        <div class="quiz-card">
+            <img src="https://cdn-3.motorsport.com/images/amp/0rGgREq2/s6/francesco-bagnaia-ducati-team-.jpg">
+
+            <div class="quiz-content">
+                <h3>🏍️ MotoGP</h3>
+
+                <p>
+                    Test completo dedicato ai campioni della MotoGP,
+                    ai team e alle gare leggendarie.
+                </p>
+
+                <button onclick="openQuiz('moto')">
+                    Avvia Quiz
+                </button>
+            </div>
+        </div>
+
+        <div class="quiz-card">
+            <img src="https://cms-images.acc.indazn.com/di/library/DAZN_News/b8/6f/la-coppa-del-mondo-di-calcio_1ulonhqcrppk1rp4trrpvhqhu.jpg?t=-507978088&quality=80&w=750&h=422">
+
+            <div class="quiz-content">
+                <h3>⚽ Calcio</h3>
+
+                <p>
+                    Domande complesse sul calcio mondiale,
+                    Champions League, Mondiali e Serie A.
+                </p>
+
+                <button onclick="openQuiz('calcio')">
+                    Avvia Quiz
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- QUIZ PAGES -->
+
+<section class="quiz-page" id="quizContainer">
+
+    <div class="section-title">
+        <h2 id="quizTitle"></h2>
+        <p>Rispondi correttamente a tutte le 15 domande per vincere.</p>
+    </div>
+
+    <div id="quizQuestions"></div>
+
+    <button class="submit-btn" onclick="submitQuiz()">
+        Controlla Risposte
+    </button>
+
+    <div class="result" id="result"></div>
+
+</section>
+
+<!-- NEWS -->
+
+<section class="section" id="news">
+
+    <div class="section-title">
+        <h2>Ultime News Sportive</h2>
+        <p>Fonti affidabili e aggiornate</p>
+    </div>
+
+    <div class="news-grid">
+
+        <div class="news-card">
+
+            <img src="https://f1.newsauto.it/wp-content/uploads/2025/09/ferrari-gp-italia-monza-assetto.jpg">
+
+            <div class="news-content">
+
+                <h3>Formula 1</h3>
+
+                <p>
+                    News ufficiali, classifiche e aggiornamenti
+                    direttamente dal mondo della Formula 1.
+                </p>
+
+                <a href="https://www.formula1.com/" target="_blank">
+                    Vai a Formula1.com
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="news-card">
+
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/MotoGP_2025_Malaysian_Grand_Prix_-_Aprilia_Racing_-_Marco_Bezzecchi.jpg">
+
+            <div class="news-content">
+
+                <h3>MotoGP</h3>
+
+                <p>
+                    Risultati, piloti e notizie ufficiali
+                    dal campionato MotoGP.
+                </p>
+
+                <a href="https://www.motogp.com/" target="_blank">
+                    Vai a MotoGP.com
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="news-card">
+
+            <img src="https://addons-media.operacdn.com/media/CACHE/images/themes/35/178835/1.1-rev1/images/b077a974-8423-4c55-8ac7-6dcb3fbf66c6/a0aadf9c6685fb90cace15bb1c649f90.jpg">
+
+            <div class="news-content">
+
+                <h3>Calcio</h3>
+
+                <p>
+                    Tutte le ultime notizie sul calcio italiano
+                    e internazionale.
+                </p>
+
+                <a href="https://www.gazzetta.it/" target="_blank">
+                    Vai a Gazzetta.it
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Ultimate Sports Quiz
+</footer>
+
+<script>
+
+/* DATABASE GRANDI */
+
+const quizzes = {
+
+f1:[
+
+{q:"In quale anno venne introdotto il sistema Halo?",a:"2018",type:"anni"},
+  {q:"In quale stagione la Formula 1 passò ai motori turbo-ibridi V6?",a:"2014",type:"anni"},
+  {q:"In quale anno debuttò il DRS?",a:"2011",type:"anni"},
+  {q:"In quale stagione fu abolito il rifornimento in gara?",a:"2010",type:"anni"},
+  {q:"In quale anno morì Ayrton Senna durante il GP di San Marino?",a:"1994",type:"anni"},
+  {q:"In quale stagione Michael Schumacher conquistò il suo primo titolo con Ferrari?",a:"2000",type:"anni"},
+  {q:"In quale anno si disputò la prima gara notturna della Formula 1?",a:"2008",type:"anni"},
+  {q:"In quale anno la Brawn GP vinse il mondiale?",a:"2009",type:"anni"},
+  {q:"In quale stagione Sebastian Vettel vinse 9 gare consecutive?",a:"2013",type:"anni"},
+  {q:"In quale anno venne fondato il campionato mondiale di Formula 1?",a:"1950",type:"anni"},
+
+  {q:"Quale circuito è soprannominato 'Tempio della Velocità'?",a:"Monza",type:"circuiti"},
+  {q:"Su quale circuito si trovano Eau Rouge e Raidillon?",a:"Spa-Francorchamps",type:"circuiti"},
+  {q:"Qual è il circuito cittadino più iconico della Formula 1?",a:"Monaco",type:"circuiti"},
+  {q:"Quale circuito giapponese ha una configurazione a '8'?",a:"Suzuka",type:"circuiti"},
+  {q:"Dove si corre il GP d’Italia?",a:"Monza",type:"circuiti"},
+  {q:"Quale circuito ospitò il tragico weekend del 1994?",a:"Imola",type:"circuiti"},
+  {q:"Qual è il circuito più lungo del calendario moderno?",a:"Spa-Francorchamps",type:"circuiti"},
+  {q:"In quale paese si trova il circuito di Interlagos?",a:"Brasile",type:"circuiti"},
+  {q:"Quale circuito è famoso per la curva Parabolica?",a:"Monza",type:"circuiti"},
+  {q:"Quale circuito cittadino ospita il GP di Singapore?",a:"Marina Bay",type:"circuiti"},
+
+  {q:"Chi è il pilota con più pole position nella storia?",a:"Lewis Hamilton",type:"piloti"},
+  {q:"Chi vinse il mondiale 2021 dopo il finale di Abu Dhabi?",a:"Max Verstappen",type:"piloti"},
+  {q:"Quale pilota argentino vinse cinque titoli mondiali negli anni '50?",a:"Juan Manuel Fangio",type:"piloti"},
+  {q:"Chi era soprannominato 'Il Professore'?",a:"Alain Prost",type:"piloti"},
+  {q:"Quale pilota vinse il mondiale 2007 con un solo punto di vantaggio?",a:"Kimi Räikkönen",type:"piloti"},
+  {q:"Chi è il pilota più giovane ad aver vinto una gara?",a:"Max Verstappen",type:"piloti"},
+  {q:"Quale pilota vinse il titolo 1976 dopo il duello con Lauda?",a:"James Hunt",type:"piloti"},
+  {q:"Chi fu il primo campione del mondo di Formula 1?",a:"Giuseppe Farina",type:"piloti"},
+  {q:"Quale pilota monegasco vinse il GP di Monaco nel 2024?",a:"Charles Leclerc",type:"piloti"},
+  {q:"Chi era soprannominato 'The Flying Scot'?",a:"Jim Clark",type:"piloti"},
+
+  {q:"Quale scuderia ha più titoli costruttori?",a:"Ferrari",type:"team"},
+  {q:"Quale team introdusse il DAS nel 2020?",a:"Mercedes",type:"team"},
+  {q:"Quale squadra dominò il 2009 con il doppio diffusore?",a:"Brawn GP",type:"team"},
+  {q:"Quale team vinse il mondiale costruttori 2023?",a:"Red Bull",type:"team"},
+  {q:"Quale squadra utilizzava motori TAG-Porsche negli anni '80?",a:"McLaren",type:"team"},
+  {q:"Quale team dominò i primi anni '90 con le sospensioni attive?",a:"Williams",type:"team"},
+  {q:"Quale scuderia italiana utilizza il Cavallino Rampante?",a:"Ferrari",type:"team"},
+  {q:"Quale team debuttò nel 1977 e diventò dominante negli anni '80 e '90?",a:"Williams",type:"team"},
+  {q:"Con quale squadra Sebastian Vettel vinse i suoi quattro titoli?",a:"Red Bull",type:"team"},
+  {q:"Quale team vinse il mondiale piloti con Jenson Button?",a:"Brawn GP",type:"team"},
+
+  {q:"Che funzione ha l’MGU-K?",a:"Recupera energia cinetica in frenata",type:"tecnica"},
+  {q:"Cosa significa undercut?",a:"Anticipare il pit stop per sfruttare gomme fresche",type:"tecnica"},
+  {q:"Che cos’è il parc fermé?",a:"Regime regolamentare che limita le modifiche alle vetture",type:"tecnica"},
+  {q:"Quale componente si apre con il DRS?",a:"L’ala posteriore",type:"tecnica"},
+  {q:"Che cilindrata hanno gli attuali motori F1?",a:"1.6 litri V6 turbo ibridi",type:"tecnica"},
+  {q:"Cosa indica il termine blistering?",a:"Il surriscaldamento della superficie della gomma",type:"tecnica"},
+  {q:"Quale gomma Pirelli è identificata dal colore rosso?",a:"Soft",type:"tecnica"},
+  {q:"Che cos’è l’aquaplaning?",a:"La perdita di aderenza causata dall’acqua sull’asfalto",type:"tecnica"},
+  {q:"Quale innovazione aerodinamica rese dominante la Brawn GP?",a:"Il doppio diffusore",type:"tecnica"},
+  {q:"Quale carburante sostenibile utilizzerà la Formula 1 dal 2026?",a:"E-fuel sostenibili",type:"tecnica"}
+
+],
+
+moto:[
+
+{q:"In quale anno Valentino Rossi vinse il suo primo mondiale nella classe regina?",a:"2001",type:"anni"},
+  {q:"In quale stagione la MotoGP sostituì la classe 500?",a:"2002",type:"anni"},
+  {q:"In quale anno Marc Márquez debuttò in MotoGP?",a:"2013",type:"anni"},
+  {q:"In quale stagione vennero introdotte le Sprint Race in MotoGP?",a:"2023",type:"anni"},
+  {q:"In quale anno Casey Stoner vinse il mondiale con Ducati?",a:"2007",type:"anni"},
+  {q:"In quale stagione Jorge Lorenzo conquistò il suo primo titolo MotoGP?",a:"2010",type:"anni"},
+  {q:"In quale anno Valentino Rossi passò alla Yamaha?",a:"2004",type:"anni"},
+  {q:"In quale anno morì Marco Simoncelli?",a:"2011",type:"anni"},
+  {q:"In quale anno Ducati ottenne la sua prima vittoria in MotoGP?",a:"2003",type:"anni"},
+  {q:"In quale stagione Pecco Bagnaia vinse il suo primo mondiale MotoGP?",a:"2022",type:"anni"},
+
+  {q:"Quale circuito ospita il GP d'Italia MotoGP?",a:"Mugello",type:"circuiti"},
+  {q:"Quale circuito spagnolo è famoso per la curva Dry Sack?",a:"Jerez",type:"circuiti"},
+  {q:"Su quale circuito si corre il GP di Catalogna?",a:"Barcellona-Catalunya",type:"circuiti"},
+  {q:"Quale circuito qatariota ospita tradizionalmente la gara notturna?",a:"Losail",type:"circuiti"},
+  {q:"Quale tracciato austriaco ospita il GP d'Austria?",a:"Red Bull Ring",type:"circuiti"},
+  {q:"Quale circuito è noto per il rettilineo del Cavatappi?",a:"Laguna Seca",type:"circuiti"},
+  {q:"In quale paese si trova il circuito di Sepang?",a:"Malesia",type:"circuiti"},
+  {q:"Quale circuito ospita il GP di Assen?",a:"TT Circuit Assen",type:"circuiti"},
+  {q:"Quale circuito britannico ospita il GP di Gran Bretagna?",a:"Silverstone",type:"circuiti"},
+  {q:"Quale circuito è soprannominato 'Università della MotoGP'?",a:"Assen",type:"circuiti"},
+
+  {q:"Chi è il pilota con più titoli mondiali nella storia del Motomondiale?",a:"Giacomo Agostini",type:"piloti"},
+  {q:"Chi vinse il mondiale MotoGP 2023?",a:"Pecco Bagnaia",type:"piloti"},
+  {q:"Quale pilota è soprannominato 'The Doctor'?",a:"Valentino Rossi",type:"piloti"},
+  {q:"Chi fu il primo campione della MotoGP nel 2002?",a:"Valentino Rossi",type:"piloti"},
+  {q:"Quale pilota australiano vinse il titolo con Ducati?",a:"Casey Stoner",type:"piloti"},
+  {q:"Chi è il pilota più giovane a vincere una gara MotoGP?",a:"Marc Márquez",type:"piloti"},
+  {q:"Quale pilota italiano vinse il mondiale MotoGP 2022?",a:"Pecco Bagnaia",type:"piloti"},
+  {q:"Chi era soprannominato 'Sic'?",a:"Marco Simoncelli",type:"piloti"},
+  {q:"Quale pilota spagnolo vinse sei titoli MotoGP con Honda?",a:"Marc Márquez",type:"piloti"},
+  {q:"Chi vinse il mondiale MotoGP 2020?",a:"Joan Mir",type:"piloti"},
+
+  {q:"Quale casa motociclistica italiana è famosa per il colore rosso in MotoGP?",a:"Ducati",type:"team"},
+  {q:"Quale team ha dominato la MotoGP con Marc Márquez?",a:"Honda",type:"team"},
+  {q:"Con quale squadra Valentino Rossi vinse nel 2004?",a:"Yamaha",type:"team"},
+  {q:"Quale team vinse il mondiale MotoGP 2023?",a:"Ducati Lenovo Team",type:"team"},
+  {q:"Quale costruttore giapponese utilizza la sigla YZR-M1?",a:"Yamaha",type:"team"},
+  {q:"Quale squadra schierava Casey Stoner nel 2007?",a:"Ducati",type:"team"},
+  {q:"Quale casa motociclistica produce la RC213V?",a:"Honda",type:"team"},
+  {q:"Quale team utilizza la Desmosedici?",a:"Ducati",type:"team"},
+  {q:"Quale costruttore ha vinto più titoli MotoGP nell’era moderna?",a:"Honda",type:"team"},
+  {q:"Quale team satellite Yamaha ospitò Valentino Rossi nel 2021?",a:"Petronas Yamaha SRT",type:"team"},
+
+  {q:"Che cos’è il ride height device?",a:"Un sistema che abbassa la moto in accelerazione",type:"tecnica"},
+  {q:"Quale componente migliora l’aerodinamica delle MotoGP moderne?",a:"Le alette aerodinamiche",type:"tecnica"},
+  {q:"Che tipo di motore utilizza la MotoGP moderna?",a:"1000cc quattro tempi",type:"tecnica"},
+  {q:"Cosa significa highside?",a:"La perdita improvvisa di aderenza con espulsione del pilota",type:"tecnica"},
+  {q:"Qual è il fornitore unico di pneumatici in MotoGP?",a:"Michelin",type:"tecnica"},
+  {q:"Che funzione ha il controllo di trazione?",a:"Limitare lo slittamento della ruota posteriore",type:"tecnica"},
+  {q:"Quale carburante sostenibile verrà introdotto gradualmente in MotoGP?",a:"Carburante sostenibile sintetico",type:"tecnica"},
+  {q:"Cosa indica il termine holeshot device?",a:"Un sistema che abbassa la moto in partenza",type:"tecnica"},
+  {q:"Quale materiale viene spesso utilizzato per i freni MotoGP?",a:"Carbonio",type:"tecnica"},
+  {q:"Che funzione ha l’anti-wheelie?",a:"Evitare l’impennata in accelerazione",type:"tecnica"}
+],
+
+calcio:[
+
+{q:"In quale anno l'Italia vinse il suo primo Mondiale?",a:"1934",type:"anni"},
+  {q:"In quale anno si disputò il primo Campionato Europeo UEFA?",a:"1960",type:"anni"},
+  {q:"In quale stagione il Leicester City vinse la Premier League?",a:"2015-16",type:"anni"},
+  {q:"In quale anno il VAR venne utilizzato per la prima volta ai Mondiali?",a:"2018",type:"anni"},
+  {q:"In quale anno il Barcellona vinse il suo primo Triplete?",a:"2009",type:"anni"},
+  {q:"In quale stagione il Milan vinse l’ultima Champions League?",a:"2006-07",type:"anni"},
+  {q:"In quale anno Diego Armando Maradona vinse il Mondiale con l'Argentina?",a:"1986",type:"anni"},
+  {q:"In quale anno la Juventus venne retrocessa in Serie B?",a:"2006",type:"anni"},
+  {q:"In quale stagione Cristiano Ronaldo debuttò con il Real Madrid?",a:"2009-10",type:"anni"},
+  {q:"In quale anno si giocò il primo Mondiale di calcio?",a:"1930",type:"anni"},
+
+  {q:"Quale stadio ospita le partite casalinghe del Barcellona?",a:"Camp Nou",type:"stadi"},
+  {q:"In quale stadio si gioca la finale della FA Cup?",a:"Wembley",type:"stadi"},
+  {q:"Qual è lo stadio della Juventus?",a:"Allianz Stadium",type:"stadi"},
+  {q:"Quale stadio è soprannominato 'La Bombonera'?",a:"Estadio Alberto J. Armando",type:"stadi"},
+  {q:"Quale stadio ospitò la finale dei Mondiali 2014?",a:"Maracanã",type:"stadi"},
+  {q:"Qual è lo stadio del Real Madrid?",a:"Santiago Bernabéu",type:"stadi"},
+  {q:"Quale stadio inglese è noto come 'The Theatre of Dreams'?",a:"Old Trafford",type:"stadi"},
+  {q:"In quale stadio gioca il Bayern Monaco?",a:"Allianz Arena",type:"stadi"},
+  {q:"Quale stadio italiano ospita il derby di Milano?",a:"San Siro",type:"stadi"},
+  {q:"Quale stadio ospita tradizionalmente la finale di Coppa Italia?",a:"Stadio Olimpico",type:"stadi"},
+
+  {q:"Chi è il miglior marcatore della storia dei Mondiali?",a:"Miroslav Klose",type:"giocatori"},
+  {q:"Chi vinse il Pallone d'Oro 2023?",a:"Lionel Messi",type:"giocatori"},
+  {q:"Quale giocatore è soprannominato 'O Fenômeno'?",a:"Ronaldo",type:"giocatori"},
+  {q:"Chi segnò il famoso 'Gol del Secolo' contro l'Inghilterra nel 1986?",a:"Diego Armando Maradona",type:"giocatori"},
+  {q:"Quale portiere italiano vinse il Pallone d'Oro nel 1963?",a:"Lev Yashin",type:"giocatori"},
+  {q:"Chi è il giocatore con più Champions League vinte?",a:"Francisco Gento",type:"giocatori"},
+  {q:"Quale attaccante svedese ha giocato per Milan, Inter, Juventus e Barcellona?",a:"Zlatan Ibrahimović",type:"giocatori"},
+  {q:"Chi vinse il Pallone d'Oro nel 2007?",a:"Kaká",type:"giocatori"},
+  {q:"Quale giocatore italiano è soprannominato 'Pinturicchio'?",a:"Alessandro Del Piero",type:"giocatori"},
+  {q:"Chi è il calciatore con più gol nella storia della Champions League?",a:"Cristiano Ronaldo",type:"giocatori"},
+
+  {q:"Quale club ha vinto più Champions League?",a:"Real Madrid",type:"squadre"},
+  {q:"Quale squadra inglese è soprannominata 'The Reds'?",a:"Liverpool",type:"squadre"},
+  {q:"Quale club italiano è noto come 'La Beneamata'?",a:"Inter",type:"squadre"},
+  {q:"Quale squadra vinse il Triplete in Italia nel 2010?",a:"Inter",type:"squadre"},
+  {q:"Quale club tedesco domina storicamente la Bundesliga?",a:"Bayern Monaco",type:"squadre"},
+  {q:"Quale squadra argentina è rivale storica del Boca Juniors?",a:"River Plate",type:"squadre"},
+  {q:"Quale club vinse la prima Premier League nel 1992-93?",a:"Manchester United",type:"squadre"},
+  {q:"Quale squadra italiana ha vinto più scudetti?",a:"Juventus",type:"squadre"},
+  {q:"Quale club è soprannominato 'Blaugrana'?",a:"Barcellona",type:"squadre"},
+  {q:"Quale squadra francese ha dominato la Ligue 1 negli anni 2010 e 2020?",a:"Paris Saint-Germain",type:"squadre"},
+
+  {q:"Che cos’è il fuorigioco?",a:"Una posizione irregolare di un attaccante oltre la linea difensiva",type:"regolamento"},
+  {q:"Quanti giocatori compongono una squadra titolare?",a:"11",type:"regolamento"},
+  {q:"Quanto dura una partita di calcio regolamentare?",a:"90 minuti",type:"regolamento"},
+  {q:"Che cos’è il VAR?",a:"Il sistema di revisione video arbitrale",type:"regolamento"},
+  {q:"Quante sostituzioni sono consentite nella maggior parte delle competizioni moderne?",a:"5",type:"regolamento"},
+  {q:"Cosa succede se una partita a eliminazione diretta termina in parità?",a:"Si giocano i tempi supplementari",type:"regolamento"},
+  {q:"Quale colore di cartellino indica un’espulsione?",a:"Rosso",type:"regolamento"},
+  {q:"Da quale distanza si calcia un rigore?",a:"11 metri",type:"regolamento"},
+  {q:"Che cos’è il golden goal?",a:"Una regola abolita in cui il primo gol nei supplementari chiudeva la partita",type:"regolamento"},
+  {q:"Qual è l’organo che governa il calcio mondiale?",a:"FIFA",type:"regolamento"}
+
+]
+
+};
+
+
+/* RANDOM 15 */
+
+function getRandomQuestions(arr){
+
+    return [...arr]
+    .sort(()=>0.5 - Math.random())
+    .slice(0,15);
+
+}
+let currentQuiz = [];
+let currentType = "";
+let currentIndex = 0;
+let userAnswers = [];
+let selectedAnswer = "";
+let score = 0;
+
+function openQuiz(type){
+    currentType = type;
+    currentQuiz = getRandomQuestions(quizzes[type]);
+
+    document.getElementById("quizContainer").style.display = "block";
+    document.getElementById("quizContainer").scrollIntoView({behavior:"smooth"});
+
+    const titleMap = {
+        f1:"🏎️ Quiz Formula 1 PRO",
+        moto:"🏍️ Quiz MotoGP PRO",
+        calcio:"⚽ Quiz Calcio PRO"
+    };
+
+    document.getElementById("quizTitle").innerText = titleMap[type];
+
+    currentIndex = 0;
+    userAnswers = [];
+    score = 0;
+
+    render();
+}
+
+function getRandomQuestions(arr){
+    return [...arr].sort(()=>Math.random()-0.5).slice(0,15);
+}
+
+
+function render(){
+
+    selectedAnswer = "";
+
+    let q = currentQuiz[currentIndex];
+    let correct = q.a;
+    let type = q.type;
+
+    // pool filtrato per tipo (coerenza totale)
+    let pool = quizzes[currentType]
+        .filter(x => x.a !== correct && x.type === type)
+        .map(x => x.a);
+
+    // se non bastano domande dello stesso tipo, fallback sicuro
+    if(pool.length < 3){
+        pool = quizzes[currentType]
+            .filter(x => x.a !== correct)
+            .map(x => x.a);
+    }
+
+    let wrong = pool
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+
+    let options = [...wrong, correct]
+        .sort(() => Math.random() - 0.5);
+
+    let html = `
+        <div class="question-box">
+            <h3>${currentIndex + 1}. ${q.q}</h3>
+    `;
+
+    options.forEach(o => {
+        html += `
+            <button class="option-btn" onclick="selectAnswer(this)" data-a="${o}">
+                ${o}
+            </button>
+        `;
+    });
+
+    html += `
+            <button class="submit-btn" onclick="next()">Avanti</button>
+        </div>
+    `;
+
+    document.getElementById("quizQuestions").innerHTML = html;
+}
+
+function selectAnswer(btn){
+    selectedAnswer = btn.getAttribute("data-a");
+
+    document.querySelectorAll(".option-btn")
+    .forEach(b => b.classList.remove("selected"));
+
+    btn.classList.add("selected");
+}
+
+function next(){
+
+    if(!selectedAnswer){
+        alert("Seleziona una risposta");
+        return;
+    }
+
+    checkAnswer();
+}
+
+
+function checkAnswer(){
+
+    let q = currentQuiz[currentIndex];
+
+    userAnswers[currentIndex] = selectedAnswer;
+
+    if(selectedAnswer === q.a){
+        score++;
+    }
+
+    currentIndex++;
+
+    if(currentIndex < currentQuiz.length){
+        render();
+    } else {
+        finish();
+    }
+}
+
+function finish(){
+
+    document.getElementById("quizQuestions").innerHTML = "";
+
+    document.getElementById("result").innerHTML =
+    "🏆 Punteggio finale: " + score + "/15";
+}
+
+function scrollToQuiz(){
+    document.getElementById("quizSection")
+    .scrollIntoView({behavior:"smooth"});
+}
+
+</script>
+
+</body>
+</html>
